@@ -149,35 +149,35 @@ class PluginConnector implements IConnector {
                                                final IVideoOutput videoOutput, final Plugin decoder) {
         if (decoder instanceof IFrameAllocator) {
             CommandHandlerFactory factory = new CommandHandlerFactory();
-            factory.register(new Pair<Command, Integer>(Command.HasData, decoder.getTrackId()), new Pair<Command, Integer>(Command.NeedData, decoder.getTrackId()), new IHandlerCreator() {
+            factory.register(new Pair<>(Command.HasData, decoder.getTrackId()), new Pair<>(Command.NeedData, decoder.getTrackId()), new IHandlerCreator() {
                 @Override
                 public ICommandHandler create() {
                     return new PushDataCommandHandler(mediaSource, decoder, (IFrameAllocator) decoder);
                 }
 
             });
-            factory.register(new Pair<Command, Integer>(Command.OutputFormatChanged, decoder.getTrackId()), new Pair<Command, Integer>(Command.NeedData, decoder.getTrackId()), new IHandlerCreator() {
+            factory.register(new Pair<>(Command.OutputFormatChanged, decoder.getTrackId()), new Pair<>(Command.NeedData, decoder.getTrackId()), new IHandlerCreator() {
                 @Override
                 public ICommandHandler create() {
                     return new OutputFormatChangedHandler(mediaSource, decoder, (IFrameAllocator) decoder);
                 }
 
             });
-            factory.register(new Pair<Command, Integer>(Command.EndOfFile, decoder.getTrackId()), new Pair<Command, Integer>(Command.NeedData, decoder.getTrackId()), new IHandlerCreator() {
+            factory.register(new Pair<>(Command.EndOfFile, decoder.getTrackId()), new Pair<>(Command.NeedData, decoder.getTrackId()), new IHandlerCreator() {
                 @Override
                 public ICommandHandler create() {
                     return new EofCommandHandler(mediaSource, decoder, (IFrameAllocator) decoder);
                 }
 
             });
-            factory.register(new Pair<Command, Integer>(Command.EndOfFile, decoder.getTrackId()), new Pair<Command, Integer>(Command.NeedInputFormat, decoder.getTrackId()), new IHandlerCreator() {
+            factory.register(new Pair<>(Command.EndOfFile, decoder.getTrackId()), new Pair<>(Command.NeedInputFormat, decoder.getTrackId()), new IHandlerCreator() {
                 @Override
                 public ICommandHandler create() {
                     return new EofCommandHandler(mediaSource, decoder, (IFrameAllocator) decoder);
                 }
 
             });
-            factory.register(new Pair<Command, Integer>(Command.HasData, decoder.getTrackId()), new Pair<Command, Integer>(Command.NeedInputFormat, decoder.getTrackId()), new IHandlerCreator() {
+            factory.register(new Pair<>(Command.HasData, decoder.getTrackId()), new Pair<>(Command.NeedInputFormat, decoder.getTrackId()), new IHandlerCreator() {
                 @Override
                 public ICommandHandler create() {
                     return new ConfigureVideoDecoderCommandHandler(videoOutput, decoder);
@@ -192,20 +192,20 @@ class PluginConnector implements IConnector {
 
     private void configureCommandProcessorPushSurfaceDecoderEncoder(final IPluginOutput decoder, final MediaCodecPlugin encoder) {
         CommandHandlerFactory factory = new CommandHandlerFactory();
-        factory.register(new Pair<Command, Integer>(Command.HasData, 0), new Pair<Command, Integer>(Command.NeedData, 0), new IHandlerCreator() {
+        factory.register(new Pair<>(Command.HasData, 0), new Pair<>(Command.NeedData, 0), new IHandlerCreator() {
             @Override
             public ICommandHandler create() {
                 return new PushSurfaceCommandHandler(decoder, encoder);
             }
         });
-        factory.register(new Pair<Command, Integer>(Command.EndOfFile, 0), new Pair<Command, Integer>(Command.NeedData, 0), new IHandlerCreator() {
+        factory.register(new Pair<>(Command.EndOfFile, 0), new Pair<>(Command.NeedData, 0), new IHandlerCreator() {
             @Override
             public ICommandHandler create() {
                 return new DrainCommandHandler(encoder);
             }
 
         });
-        factory.register(new Pair<Command, Integer>(Command.OutputFormatChanged, 0), new Pair<Command, Integer>(Command.NeedData, 0), new IHandlerCreator() {
+        factory.register(new Pair<>(Command.OutputFormatChanged, 0), new Pair<>(Command.NeedData, 0), new IHandlerCreator() {
             @Override
             public ICommandHandler create() {
                 return new SkipOutputFormatChangeCommandHandler(encoder);
@@ -217,13 +217,13 @@ class PluginConnector implements IConnector {
 
     private void configureCommandProcessorPushSurfaceSurfaceRender(final IPluginOutput decoder, final SurfaceRender render) {
         CommandHandlerFactory factory = new CommandHandlerFactory();
-        factory.register(new Pair<Command, Integer>(Command.HasData, 0), new Pair<Command, Integer>(Command.NeedData, 0), new IHandlerCreator() {
+        factory.register(new Pair<>(Command.HasData, 0), new Pair<>(Command.NeedData, 0), new IHandlerCreator() {
             @Override
             public ICommandHandler create() {
                 return new PushSurfaceCommandHandlerForSurfaceRender(decoder, render);
             }
         });
-        factory.register(new Pair<Command, Integer>(Command.OutputFormatChanged, 0), new Pair<Command, Integer>(Command.NeedData, 0), new IHandlerCreator() {
+        factory.register(new Pair<>(Command.OutputFormatChanged, 0), new Pair<>(Command.NeedData, 0), new IHandlerCreator() {
             @Override
             public ICommandHandler create() {
                 return new SkipOutputFormatChangeCommandHandler(render);
@@ -236,19 +236,19 @@ class PluginConnector implements IConnector {
 
     private void configureCommandProcessorPushSurfaceEffector(final IPluginOutput decoder, final MediaCodecPlugin encoder) {
         CommandHandlerFactory factory = new CommandHandlerFactory();
-        factory.register(new Pair<Command, Integer>(Command.HasData, 0), new Pair<Command, Integer>(Command.NeedData, 0), new IHandlerCreator() {
+        factory.register(new Pair<>(Command.HasData, 0), new Pair<>(Command.NeedData, 0), new IHandlerCreator() {
             @Override
             public ICommandHandler create() {
                 return new PushSurfaceCommandHandlerForEffector(decoder, encoder);
             }
         });
-        factory.register(new Pair<Command, Integer>(Command.EndOfFile, 0), new Pair<Command, Integer>(Command.NeedData, 0), new IHandlerCreator() {
+        factory.register(new Pair<>(Command.EndOfFile, 0), new Pair<>(Command.NeedData, 0), new IHandlerCreator() {
             @Override
             public ICommandHandler create() {
                 return new DrainCommandHandler(encoder);
             }
         });
-        factory.register(new Pair<Command, Integer>(Command.OutputFormatChanged, 0), new Pair<Command, Integer>(Command.NeedData, 0), new IHandlerCreator() {
+        factory.register(new Pair<>(Command.OutputFormatChanged, 0), new Pair<>(Command.NeedData, 0), new IHandlerCreator() {
             @Override
             public ICommandHandler create() {
                 return new SkipOutputFormatChangeCommandHandler(encoder);
@@ -260,26 +260,26 @@ class PluginConnector implements IConnector {
 
     private void configureCommandProcessorPushSurfaceEffector(final IPluginOutput decoder, final IVideoOutput videoOutput, final MediaCodecPlugin encoder) {
         CommandHandlerFactory factory = new CommandHandlerFactory();
-        factory.register(new Pair<Command, Integer>(Command.HasData, 0), new Pair<Command, Integer>(Command.NeedData, 0), new IHandlerCreator() {
+        factory.register(new Pair<>(Command.HasData, 0), new Pair<>(Command.NeedData, 0), new IHandlerCreator() {
             @Override
             public ICommandHandler create() {
                 return new PushSurfaceCommandHandlerForEffector(decoder, encoder);
             }
         });
-        factory.register(new Pair<Command, Integer>(Command.EndOfFile, 0), new Pair<Command, Integer>(Command.NeedData, 0), new IHandlerCreator() {
+        factory.register(new Pair<>(Command.EndOfFile, 0), new Pair<>(Command.NeedData, 0), new IHandlerCreator() {
             @Override
             public ICommandHandler create() {
                 return new DrainCommandHandler(encoder);
             }
         });
-        factory.register(new Pair<Command, Integer>(Command.OutputFormatChanged, 0), new Pair<Command, Integer>(Command.NeedData, 0), new IHandlerCreator() {
+        factory.register(new Pair<>(Command.OutputFormatChanged, 0), new Pair<>(Command.NeedData, 0), new IHandlerCreator() {
             @Override
             public ICommandHandler create() {
                 return new SkipOutputFormatChangeCommandHandler(encoder);
             }
 
         });
-        factory.register(new Pair<Command, Integer>(Command.OutputFormatChanged, 0), new Pair<Command, Integer>(Command.NeedInputFormat, 0), new IHandlerCreator() {
+        factory.register(new Pair<>(Command.OutputFormatChanged, 0), new Pair<>(Command.NeedInputFormat, 0), new IHandlerCreator() {
             @Override
             public ICommandHandler create() {
                 return new ConfigureVideoEffectorCommandHandler(videoOutput, encoder);
@@ -291,20 +291,20 @@ class PluginConnector implements IConnector {
 
     private void configureAudioPipelineCommandProcessorCopy(final MediaCodecPlugin decoder, final MediaCodecPlugin encoder) {
         CommandHandlerFactory factory = new CommandHandlerFactory();
-        factory.register(new Pair<Command, Integer>(Command.HasData, 0), new Pair<Command, Integer>(Command.NeedData, 0), new IHandlerCreator() {
+        factory.register(new Pair<>(Command.HasData, 0), new Pair<>(Command.NeedData, 0), new IHandlerCreator() {
             @Override
             public ICommandHandler create() {
                 return new CopyDataCommandHandler(decoder, encoder);
             }
         });
-        factory.register(new Pair<Command, Integer>(Command.OutputFormatChanged, 0), new Pair<Command, Integer>(Command.NeedData, 0), new IHandlerCreator() {
+        factory.register(new Pair<>(Command.OutputFormatChanged, 0), new Pair<>(Command.NeedData, 0), new IHandlerCreator() {
             @Override
             public ICommandHandler create() {
                 return new AudioPipelineOutputFormatChangeCommandHandler(decoder, encoder);
             }
 
         });
-        factory.register(new Pair<Command, Integer>(Command.EndOfFile, 0), new Pair<Command, Integer>(Command.NeedData, 0), new IHandlerCreator() {
+        factory.register(new Pair<>(Command.EndOfFile, 0), new Pair<>(Command.NeedData, 0), new IHandlerCreator() {
             @Override
             public ICommandHandler create() {
                 return new DrainCommandHandler(encoder);
@@ -316,26 +316,26 @@ class PluginConnector implements IConnector {
 
     private void configureCommandProcessorPushSurfaceEffector2(final MediaCodecPlugin scaler, final MediaCodecPlugin effector) {
         CommandHandlerFactory factory = new CommandHandlerFactory();
-        factory.register(new Pair<Command, Integer>(Command.HasData, 0), new Pair<Command, Integer>(Command.NeedData, 0), new IHandlerCreator() {
+        factory.register(new Pair<>(Command.HasData, 0), new Pair<>(Command.NeedData, 0), new IHandlerCreator() {
             @Override
             public ICommandHandler create() {
                 return new PushSurfaceCommandHandlerForEffector(scaler, effector);
             }
         });
-        factory.register(new Pair<Command, Integer>(Command.EndOfFile, 0), new Pair<Command, Integer>(Command.NeedData, 0), new IHandlerCreator() {
+        factory.register(new Pair<>(Command.EndOfFile, 0), new Pair<>(Command.NeedData, 0), new IHandlerCreator() {
             @Override
             public ICommandHandler create() {
                 return new DrainCommandHandler(effector);
             }
         });
-        factory.register(new Pair<Command, Integer>(Command.OutputFormatChanged, 0), new Pair<Command, Integer>(Command.NeedData, 0), new IHandlerCreator() {
+        factory.register(new Pair<>(Command.OutputFormatChanged, 0), new Pair<>(Command.NeedData, 0), new IHandlerCreator() {
             @Override
             public ICommandHandler create() {
                 return new SkipOutputFormatChangeCommandHandler(effector);
             }
 
         });
-        factory.register(new Pair<Command, Integer>(Command.OutputFormatChanged, 0), new Pair<Command, Integer>(Command.NeedInputFormat, 0), new IHandlerCreator() {
+        factory.register(new Pair<>(Command.OutputFormatChanged, 0), new Pair<>(Command.NeedInputFormat, 0), new IHandlerCreator() {
             @Override
             public ICommandHandler create() {
                 return new ConfigureVideoTimeScalerVideoEffectorCommand(scaler, effector);
@@ -374,7 +374,7 @@ class PluginConnector implements IConnector {
     public void connect(final IPluginOutput plugin, final Render render) {
         CommandHandlerFactory factory = new CommandHandlerFactory();
         if (plugin instanceof Encoder || plugin instanceof PassThroughPlugin) {
-            factory.register(new Pair<Command, Integer>(Command.OutputFormatChanged, 0), new Pair<Command, Integer>(Command.NeedInputFormat, 0), new IHandlerCreator() {
+            factory.register(new Pair<>(Command.OutputFormatChanged, 0), new Pair<>(Command.NeedInputFormat, 0), new IHandlerCreator() {
                 @Override
                 public ICommandHandler create() {
                     return new EncoderMediaFormatChangedCommandHandler((Plugin) plugin, render);
@@ -382,28 +382,28 @@ class PluginConnector implements IConnector {
 
             });
         }
-        factory.register(new Pair<Command, Integer>(Command.HasData, 0), new Pair<Command, Integer>(Command.NeedData, 0), new IHandlerCreator() {
+        factory.register(new Pair<>(Command.HasData, 0), new Pair<>(Command.NeedData, 0), new IHandlerCreator() {
             @Override
             public ICommandHandler create() {
                 return new PullDataCommandHandler(plugin, render);
             }
 
         });
-        factory.register(new Pair<Command, Integer>(Command.HasData, 0), new Pair<Command, Integer>(Command.NeedInputFormat, 0), new IHandlerCreator() {
+        factory.register(new Pair<>(Command.HasData, 0), new Pair<>(Command.NeedInputFormat, 0), new IHandlerCreator() {
             @Override
             public ICommandHandler create() {
                 return new PullDataCommandHandler(plugin, render);
             }
 
         });
-        factory.register(new Pair<Command, Integer>(Command.EndOfFile, 0), new Pair<Command, Integer>(Command.NeedData, 0), new IHandlerCreator() {
+        factory.register(new Pair<>(Command.EndOfFile, 0), new Pair<>(Command.NeedData, 0), new IHandlerCreator() {
             @Override
             public ICommandHandler create() {
                 return new DrainRenderCommandHandler(render);
             }
 
         });
-        factory.register(new Pair<Command, Integer>(Command.EndOfFile, 0), new Pair<Command, Integer>(Command.NeedInputFormat, 0), new IHandlerCreator() {
+        factory.register(new Pair<>(Command.EndOfFile, 0), new Pair<>(Command.NeedInputFormat, 0), new IHandlerCreator() {
             @Override
             public ICommandHandler create() {
                 return new DrainRenderCommandHandler(render);
@@ -417,7 +417,7 @@ class PluginConnector implements IConnector {
     public void connect(final IMediaSource source, final Render render) {
         CommandHandlerFactory factory = new CommandHandlerFactory();
 
-        factory.register(new Pair<Command, Integer>(Command.HasData, 0), new Pair<Command, Integer>(Command.NeedData, 0), new IHandlerCreator() {
+        factory.register(new Pair<>(Command.HasData, 0), new Pair<>(Command.NeedData, 0), new IHandlerCreator() {
             @Override
             public ICommandHandler create() {
                 return new PushNewDataCommandHandler(source, render);
@@ -438,19 +438,19 @@ class PluginConnector implements IConnector {
 
     public void connect(final ICameraSource source, final Encoder encoder) {
         CommandHandlerFactory factory = new CommandHandlerFactory();
-        factory.register(new Pair<Command, Integer>(Command.HasData, 0), new Pair<Command, Integer>(Command.NeedData, 0), new IHandlerCreator() {
+        factory.register(new Pair<>(Command.HasData, 0), new Pair<>(Command.NeedData, 0), new IHandlerCreator() {
             @Override
             public ICommandHandler create() {
                 return new CaptureSourcePullSurfaceCommandHandler(source, encoder);
             }
         });
-        factory.register(new Pair<Command, Integer>(Command.EndOfFile, 0), new Pair<Command, Integer>(Command.NeedData, 0), new IHandlerCreator() {
+        factory.register(new Pair<>(Command.EndOfFile, 0), new Pair<>(Command.NeedData, 0), new IHandlerCreator() {
             @Override
             public ICommandHandler create() {
                 return new DrainCommandHandler(encoder);
             }
         });
-        factory.register(new Pair<Command, Integer>(Command.OutputFormatChanged, 0), new Pair<Command, Integer>(Command.NeedData, 0), new IHandlerCreator() {
+        factory.register(new Pair<>(Command.OutputFormatChanged, 0), new Pair<>(Command.NeedData, 0), new IHandlerCreator() {
             @Override
             public ICommandHandler create() {
                 return new SkipOutputFormatChangeCommandHandler(encoder);
@@ -476,20 +476,20 @@ class PluginConnector implements IConnector {
 
     private void configureAudioPipelineWithEffectorCommandProcessorCopy(final IMicrophoneSource source, final MediaCodecPlugin effector) {
         CommandHandlerFactory factory = new CommandHandlerFactory();
-        factory.register(new Pair<Command, Integer>(Command.HasData, 0), new Pair<Command, Integer>(Command.NeedData, 0), new IHandlerCreator() {
+        factory.register(new Pair<>(Command.HasData, 0), new Pair<>(Command.NeedData, 0), new IHandlerCreator() {
             @Override
             public ICommandHandler create() {
                 return new PullFrameToEffectorFromMicrophoneSourceCommandHandler(source, effector);
             }
         });
-        factory.register(new Pair<Command, Integer>(Command.OutputFormatChanged, 0), new Pair<Command, Integer>(Command.NeedData, 0), new IHandlerCreator() {
+        factory.register(new Pair<>(Command.OutputFormatChanged, 0), new Pair<>(Command.NeedData, 0), new IHandlerCreator() {
             @Override
             public ICommandHandler create() {
                 return new SkipOutputFormatChangeCommandHandler(effector);
             }
 
         });
-        factory.register(new Pair<Command, Integer>(Command.EndOfFile, 0), new Pair<Command, Integer>(Command.NeedData, 0), new IHandlerCreator() {
+        factory.register(new Pair<>(Command.EndOfFile, 0), new Pair<>(Command.NeedData, 0), new IHandlerCreator() {
             @Override
             public ICommandHandler create() {
                 return new DrainCommandHandler(effector);
@@ -500,20 +500,20 @@ class PluginConnector implements IConnector {
 
     public void connect(final IMicrophoneSource source, final AudioEncoder encoder) {
         CommandHandlerFactory factory = new CommandHandlerFactory();
-        factory.register(new Pair<Command, Integer>(Command.HasData, 0), new Pair<Command, Integer>(Command.NeedData, 0), new IHandlerCreator() {
+        factory.register(new Pair<>(Command.HasData, 0), new Pair<>(Command.NeedData, 0), new IHandlerCreator() {
             @Override
             public ICommandHandler create() {
                 return new MicrophoneSourcePullFrameCommandHandler(source, encoder);
             }
         });
-        factory.register(new Pair<Command, Integer>(Command.OutputFormatChanged, 0), new Pair<Command, Integer>(Command.NeedData, 0), new IHandlerCreator() {
+        factory.register(new Pair<>(Command.OutputFormatChanged, 0), new Pair<>(Command.NeedData, 0), new IHandlerCreator() {
             @Override
             public ICommandHandler create() {
                 return new SkipOutputFormatChangeCommandHandler(encoder);
             }
 
         });
-        factory.register(new Pair<Command, Integer>(Command.EndOfFile, 0), new Pair<Command, Integer>(Command.NeedData, 0), new IHandlerCreator() {
+        factory.register(new Pair<>(Command.EndOfFile, 0), new Pair<>(Command.NeedData, 0), new IHandlerCreator() {
             @Override
             public ICommandHandler create() {
                 return new DrainCommandHandler(encoder);
@@ -528,40 +528,40 @@ class PluginConnector implements IConnector {
 
     public void connect(final ICameraSource camera, final VideoEffector effector) {
         CommandHandlerFactory factory = new CommandHandlerFactory();
-        factory.register(new Pair<Command, Integer>(Command.HasData, 0), new Pair<Command, Integer>(Command.NeedData, 0), new IHandlerCreator() {
+        factory.register(new Pair<>(Command.HasData, 0), new Pair<>(Command.NeedData, 0), new IHandlerCreator() {
             @Override
             public ICommandHandler create() {
                 return new CaptureSourcePullSurfaceCommandHandler(camera, effector);
             }
         });
-        factory.register(new Pair<Command, Integer>(Command.OutputFormatChanged, 0), new Pair<Command, Integer>(Command.NeedData, 0), new IHandlerCreator() {
+        factory.register(new Pair<>(Command.OutputFormatChanged, 0), new Pair<>(Command.NeedData, 0), new IHandlerCreator() {
             @Override
             public ICommandHandler create() {
                 return new SkipOutputFormatChangeCommandHandler(effector);
             }
 
         });
-        factory.register(new Pair<Command, Integer>(Command.OutputFormatChanged, 0), new Pair<Command, Integer>(Command.NeedInputFormat, 0), new IHandlerCreator() {
+        factory.register(new Pair<>(Command.OutputFormatChanged, 0), new Pair<>(Command.NeedInputFormat, 0), new IHandlerCreator() {
             @Override
             public ICommandHandler create() {
                 return new ConfigureVideoEffectorCommandHandler(camera, effector);
             }
 
         });
-        factory.register(new Pair<Command, Integer>(Command.HasData, 0), new Pair<Command, Integer>(Command.NeedInputFormat, 0), new IHandlerCreator() {
+        factory.register(new Pair<>(Command.HasData, 0), new Pair<>(Command.NeedInputFormat, 0), new IHandlerCreator() {
             @Override
             public ICommandHandler create() {
                 return new ConfigureVideoEffectorCommandHandler(camera, effector);
             }
 
         });
-        factory.register(new Pair<Command, Integer>(Command.EndOfFile, 0), new Pair<Command, Integer>(Command.NeedData, 0), new IHandlerCreator() {
+        factory.register(new Pair<>(Command.EndOfFile, 0), new Pair<>(Command.NeedData, 0), new IHandlerCreator() {
             @Override
             public ICommandHandler create() {
                 return new DrainCommandHandler(effector);
             }
         });
-        factory.register(new Pair<Command, Integer>(Command.EndOfFile, 0), new Pair<Command, Integer>(Command.NeedInputFormat, 0), new IHandlerCreator() {
+        factory.register(new Pair<>(Command.EndOfFile, 0), new Pair<>(Command.NeedInputFormat, 0), new IHandlerCreator() {
             @Override
             public ICommandHandler create() {
                 return new DrainCommandHandler(effector);
