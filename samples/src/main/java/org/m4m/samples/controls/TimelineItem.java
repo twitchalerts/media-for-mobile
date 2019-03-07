@@ -106,14 +106,14 @@ public class TimelineItem extends RelativeLayout implements View.OnClickListener
     /*
     Get segment starting position in milliseconds
      */
-    public int getSegmentFrom() {
+    public long getSegmentFrom() {
         return percentToPosition(mSegmentSelector.getStartPosition());
     }
 
     /*
     Get segment ending position in milliseconds
      */
-    public int getSegmentTo() {
+    public long getSegmentTo() {
         return percentToPosition(mSegmentSelector.getEndPosition());
     }
 
@@ -293,16 +293,14 @@ public class TimelineItem extends RelativeLayout implements View.OnClickListener
             return;
         }
 
-        int seekTo = percentToPosition(position);
+        long seekTo = percentToPosition(position);
 
         mVideoPosition = seekTo / 1000;
 
         mVideoView.seekTo((int) mVideoPosition);
     }
 
-    private int percentToPosition(int percent) {
-        int position = (int) (mVideoDuration * percent / 100);
-
-        return position;
+    private long percentToPosition(long percent) {
+        return (mVideoDuration * percent / 100);
     }
 }

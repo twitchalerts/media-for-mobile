@@ -58,8 +58,8 @@ public class ComposerCutActivity extends ActivityWithTimeline implements View.On
 
         mItem.stopVideoView();
 
-        int segmentFrom = mItem.getSegmentFrom();
-        int segmentTo = mItem.getSegmentTo();
+        long segmentFrom = mItem.getSegmentFrom();
+        long segmentTo = mItem.getSegmentTo();
 
         Intent intent = new Intent();
         intent.setClass(this, ComposerCutCoreActivity.class);
