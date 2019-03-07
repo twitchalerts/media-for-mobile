@@ -78,14 +78,12 @@ public class VideoEncoder extends Encoder implements ITransform {
 
     @Override
     protected void feedMeIfNotDraining() {
-        if (frameCount < 2) {
-            if (state != PluginState.Draining && state != PluginState.Drained ) {
+        if (state != PluginState.Draining && state != PluginState.Drained ) {
 
-                Pair<Command, Integer> command = getInputCommandQueue().first();
+            Pair<Command, Integer> command = getInputCommandQueue().first();
 
-                if (command == null || command.left != Command.NeedData ) {
-                    getInputCommandQueue().queue(Command.NeedData, getTrackId());
-                }
+            if (command == null || command.left != Command.NeedData ) {
+                getInputCommandQueue().queue(Command.NeedData, getTrackId());
             }
         }
     }
@@ -101,10 +99,8 @@ public class VideoEncoder extends Encoder implements ITransform {
     @Override
     public void notifySurfaceReady(ISurface surface) {
 
-        if (frameCount < 2) {
-            surface.swapBuffers();
-            frameCount++;
-        }
+        // we should ALWAYS swap, or else we'll never receive more encoded frames,
+        surface.swapBuffers();
 
         //Logger.getLogger("AMP").info("VideoEncoder frameCount++ = " + frameCount);
     }
@@ -112,7 +108,6 @@ public class VideoEncoder extends Encoder implements ITransform {
     @Override
     public void releaseOutputBuffer(int outputBufferIndex) {
         super.releaseOutputBuffer(outputBufferIndex);
-        frameCount--;
 
         //Logger.getLogger("AMP").info("VideoEncoder frameCount-- = " + frameCount);
     }
