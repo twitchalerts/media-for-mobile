@@ -516,7 +516,9 @@ public class ComposerTranscodeCoreActivity extends ActivityWithTimeline implemen
         printPaths();
         printDuration();
         printEffectDetails();
-        printAudioInfo();
+        if (null != audioFormat) {
+            printAudioInfo();
+        }
     }
 
     private void printAudioInfo() {

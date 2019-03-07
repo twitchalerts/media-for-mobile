@@ -1,10 +1,12 @@
 <?xml version="1.0" encoding="utf-8"?>
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
-          package="org.m4m.samples"
-          android:versionCode="1"
-          android:versionName="1.0">
+    xmlns:tools="http://schemas.android.com/tools"
+    package="org.m4m.samples"
+    >
 
-    <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE"/>
+    <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE"
+        android:maxSdkVersion="21"
+        />
 
     <!-- Camera permissions-->
     <uses-feature android:name="android.hardware.camera"/>
@@ -21,13 +23,15 @@
             android:required="true"/>
 
     <application
-            android:label="@string/app_name"
-            android:icon="@mipmap/ic_launcher"
-            android:largeHeap="true">
+        android:label="@string/app_name"
+        android:icon="@mipmap/ic_launcher"
+        android:largeHeap="true"
+        android:allowBackup="false"
+        tools:ignore="GoogleAppIndexingWarning">
 
         <activity
-                android:name="org.m4m.samples.SamplesMainActivity"
-                android:configChanges="orientation|keyboardHidden|screenSize">
+            android:name="org.m4m.samples.SamplesMainActivity"
+            android:configChanges="orientation|keyboardHidden|screenSize">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN"/>
 
@@ -36,80 +40,80 @@
         </activity>
 
         <activity
-                android:name="org.m4m.samples.GameCapturing"
-                android:configChanges="orientation|keyboardHidden|screenSize"
-                android:label="Game Capturing"/>
+            android:name="org.m4m.samples.GameCapturing"
+            android:configChanges="orientation|keyboardHidden|screenSize"
+            android:label="Game Capturing"/>
 
         <activity
-                android:name="org.m4m.samples.ComposerTranscodeActivity"
-                android:configChanges="orientation|keyboardHidden|screenSize"
-                android:label="Transcode Video"/>
+            android:name="org.m4m.samples.ComposerTranscodeActivity"
+            android:configChanges="orientation|keyboardHidden|screenSize"
+            android:label="Transcode Video"/>
 
         <activity
-                android:name="org.m4m.samples.ComposerTranscodeCoreActivity"
-                android:configChanges="orientation|keyboardHidden|screenSize"
-                android:label="Transcode Video Core"/>
+            android:name="org.m4m.samples.ComposerTranscodeCoreActivity"
+            android:configChanges="orientation|keyboardHidden|screenSize"
+            android:label="Transcode Video Core"/>
 
         <activity
-                android:name="org.m4m.samples.ComposerMediaFileInfoActivity"
-                android:configChanges="orientation|keyboardHidden|screenSize"
-                android:label="Get Media File Info"/>
+            android:name="org.m4m.samples.ComposerMediaFileInfoActivity"
+            android:configChanges="orientation|keyboardHidden|screenSize"
+            android:label="Get Media File Info"/>
         <activity
-                android:name="org.m4m.samples.ComposerMediaFileInfoCoreActivity"
-                android:configChanges="orientation|keyboardHidden|screenSize"
-                android:label="Get Media File Info Core"/>
+            android:name="org.m4m.samples.ComposerMediaFileInfoCoreActivity"
+            android:configChanges="orientation|keyboardHidden|screenSize"
+            android:label="Get Media File Info Core"/>
 
         <activity
-                android:name="org.m4m.samples.ComposerJoinActivity"
-                android:configChanges="orientation|keyboardHidden|screenSize"
-                android:label="Join Video"/>
+            android:name="org.m4m.samples.ComposerJoinActivity"
+            android:configChanges="orientation|keyboardHidden|screenSize"
+            android:label="Join Video"/>
         <activity
-                android:name="org.m4m.samples.ComposerJoinCoreActivity"
-                android:configChanges="orientation|keyboardHidden|screenSize"
-                android:label="Join Video Core"/>
+            android:name="org.m4m.samples.ComposerJoinCoreActivity"
+            android:configChanges="orientation|keyboardHidden|screenSize"
+            android:label="Join Video Core"/>
 
         <activity
-                android:name="org.m4m.samples.ComposerCutActivity"
-                android:configChanges="orientation|keyboardHidden|screenSize"
-                android:label="Cut Video"/>
+            android:name="org.m4m.samples.ComposerCutActivity"
+            android:configChanges="orientation|keyboardHidden|screenSize"
+            android:label="Cut Video"/>
         <activity
-                android:name="org.m4m.samples.ComposerCutCoreActivity"
-                android:configChanges="orientation|keyboardHidden|screenSize"
-                android:label="Cut Video Core"/>
+            android:name="org.m4m.samples.ComposerCutCoreActivity"
+            android:configChanges="orientation|keyboardHidden|screenSize"
+            android:label="Cut Video Core"/>
 
         <activity
-                android:name="org.m4m.samples.ComposerVideoEffectActivity"
-                android:configChanges="orientation|keyboardHidden|screenSize"
-                android:label="Video Effect"/>
+            android:name="org.m4m.samples.ComposerVideoEffectActivity"
+            android:configChanges="orientation|keyboardHidden|screenSize"
+            android:label="Video Effect"/>
         <activity
-                android:name="org.m4m.samples.ComposerVideoEffectCoreActivity"
-                android:configChanges="orientation|keyboardHidden|screenSize"
-                android:label="Video Effect Core"/>
+            android:name="org.m4m.samples.ComposerVideoEffectCoreActivity"
+            android:configChanges="orientation|keyboardHidden|screenSize"
+            android:label="Video Effect Core"/>
 
         <activity
-                android:name="org.m4m.samples.ComposerTimeScalingActivity"
-                android:configChanges="orientation|keyboardHidden|screenSize"
-                android:label="Time Scaling Playback"/>
+            android:name="org.m4m.samples.ComposerTimeScalingActivity"
+            android:configChanges="orientation|keyboardHidden|screenSize"
+            android:label="Time Scaling Playback"/>
         <activity
-                android:name="org.m4m.samples.ComposerTimeScalingCoreActivity"
-                android:configChanges="orientation|keyboardHidden|screenSize"
-                android:label="Time Scaling Core"/>
+            android:name="org.m4m.samples.ComposerTimeScalingCoreActivity"
+            android:configChanges="orientation|keyboardHidden|screenSize"
+            android:label="Time Scaling Core"/>
 
         <activity
-                android:name="org.m4m.samples.CameraCapturerActivity"
-                android:configChanges="keyboardHidden|orientation|screenSize"
-                android:screenOrientation="landscape"
-                android:theme="@android:style/Theme.Black.NoTitleBar"
-                android:label="Camera Capturer"/>
+            android:name="org.m4m.samples.CameraCapturerActivity"
+            android:configChanges="keyboardHidden|orientation|screenSize"
+            android:screenOrientation="landscape"
+            android:theme="@android:style/Theme.Black.NoTitleBar"
+            android:label="Camera Capturer"/>
 
         <activity
-                android:name="org.m4m.samples.ComposerAudioEffectActivity"
-                android:configChanges="orientation|keyboardHidden|screenSize"
-                android:label="Audio Effect"/>
+            android:name="org.m4m.samples.ComposerAudioEffectActivity"
+            android:configChanges="orientation|keyboardHidden|screenSize"
+            android:label="Audio Effect"/>
         <activity
-                android:name="org.m4m.samples.ComposerAudioEffectCoreActivity"
-                android:configChanges="orientation|keyboardHidden|screenSize"
-                android:label="Audio Effect Core"/>
+            android:name="org.m4m.samples.ComposerAudioEffectCoreActivity"
+            android:configChanges="orientation|keyboardHidden|screenSize"
+            android:label="Audio Effect Core"/>
 
     </application>
 

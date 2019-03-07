@@ -18,6 +18,7 @@ package org.m4m.samples.controls;
 
 import android.content.Context;
 import android.net.Uri;
+import android.os.Build;
 import android.os.Environment;
 import android.util.AttributeSet;
 import android.view.LayoutInflater;
@@ -178,15 +179,20 @@ public class TimelineItem extends RelativeLayout implements View.OnClickListener
     public String genDstPath(String srcName, String effect)
     {
         String substring = srcName.substring(0, srcName.lastIndexOf('.'));
-        File outputFolder = new File(Environment.getExternalStoragePublicDirectory(Environment.DIRECTORY_MOVIES).getPath(), DEFAULT_MEDIA_PACK_FOLDER);
+        File outputFolder;
+
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
+            outputFolder = new File(mContext.getExternalMediaDirs()[0].getPath(), DEFAULT_MEDIA_PACK_FOLDER);
+        }
+        else {
+            outputFolder = new File(Environment.getExternalStoragePublicDirectory(Environment.DIRECTORY_MOVIES).getPath(), DEFAULT_MEDIA_PACK_FOLDER);
+        }
 
         if (!outputFolder.exists()) {
             outputFolder.mkdirs();
         }
 
-        String dstPath = ( outputFolder.getPath() + "/" + substring + "_" + effect + ".mp4");
-                
-        return dstPath;
+        return ( outputFolder.getPath() + "/" + substring + "_" + effect + ".mp4");
     }
 
     public String genDstPath(String srcPath1, String srcPath2, String effect)

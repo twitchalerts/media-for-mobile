@@ -29,16 +29,16 @@ public abstract class MediaCodecPlugin extends Plugin {
     protected final IMediaCodec mediaCodec;
     //protected final org.slf4j.Logger log = LoggerFactory.getLogger(getClass());
 
-    protected Queue<Integer> outputBufferIndexes = new LinkedList<Integer>();
-    protected Queue<Integer> inputBufferIndexes = new LinkedList<Integer>();
-    protected Queue<IMediaCodec.BufferInfo> outputBufferInfos = new LinkedList<IMediaCodec.BufferInfo>();
+    protected Queue<Integer> outputBufferIndexes = new LinkedList<>();
+    protected Queue<Integer> inputBufferIndexes = new LinkedList<>();
+    protected Queue<IMediaCodec.BufferInfo> outputBufferInfos = new LinkedList<>();
     protected MediaFormat outputMediaFormat = null;
     protected ByteBuffer[] inputBuffers = null;
     protected int outputTrackId;
 
     protected int frameCount;
 
-    protected HashMap<Integer, Frame> bufferIndexToFrame = new HashMap<Integer, Frame>();
+    protected HashMap<Integer, Frame> bufferIndexToFrame = new HashMap<>();
 
     public MediaCodecPlugin(IMediaCodec mediaCodec) {
         this.mediaCodec = mediaCodec;
