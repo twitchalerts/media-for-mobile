@@ -22,6 +22,7 @@ import org.m4m.VideoFormat;
 
 import java.io.IOException;
 import java.util.ArrayList;
+import java.util.logging.Logger;
 
 public class MuxRender extends Render {
 
@@ -51,7 +52,7 @@ public class MuxRender extends Render {
 
     @Override
     public void push(Frame frame) {
-        //Logger.getLogger("AMP").info("Render frame presentationTimeUs = " + frame.getSampleTime());
+        Logger.getLogger("AMP").info("Render frame presentationTimeUs = " + frame.getSampleTime());
 
         if(zeroFramesReceived == true) {
             zeroFramesReceived = false;
@@ -69,7 +70,7 @@ public class MuxRender extends Render {
 
 
     public void pushWithReleaser(Frame frame, IPluginOutput releaser) {
-        //Logger.getLogger("AMP").info("Render frame presentationTimeUs = " + frame.getSampleTime());
+        Logger.getLogger("AMP").info("Render frame presentationTimeUs = " + frame.getSampleTime());
 
         if(zeroFramesReceived == true) {
             zeroFramesReceived = false;

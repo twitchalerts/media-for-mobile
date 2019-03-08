@@ -140,10 +140,14 @@ public class MediaSource implements IMediaSource {
     private long getSampleTime() {
         long sampleTime = mediaExtractor.getSampleTime();
 
-        if (!reachedSeekPosition(sampleTime)) return sampleTime;
+        return sampleTime;
 
-        segments.saveSampleTime(sampleTime);
-        return segments.shift(sampleTime);
+        // returning a shifted sample time will be less than the latest one sent to a codec,
+        // causing critical issues (like the codec ignoring the new TS and dequeing those frames using the latest TS)
+//        if (!reachedSeekPosition(sampleTime)) return sampleTime;
+//
+//        segments.saveSampleTime(sampleTime);
+//        return segments.shift(sampleTime);
     }
 
     private void drain() {

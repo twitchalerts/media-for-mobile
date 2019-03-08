@@ -18,9 +18,10 @@ package org.m4m.domain;
 
 import java.nio.ByteBuffer;
 import java.util.ArrayList;
+import java.util.logging.Logger;
 
 abstract class Decoder extends MediaCodecPlugin implements IFrameAllocator, ITransform {
-    //Logger log = Logger.getLogger(getClass().getSimpleName());
+    Logger log = Logger.getLogger(getClass().getSimpleName());
 
     private final MediaFormatType mediaFormatType;
     private ISurface outputSurface;
@@ -51,8 +52,15 @@ abstract class Decoder extends MediaCodecPlugin implements IFrameAllocator, ITra
     @Override
     public void push(Frame frame) {
         super.push(frame);
-        //log.info("Decoder gets frame pts=" + frame.getSampleTime() + ", trackId=" + frame.getTrackId() + ", flags=" + frame.getFlags() + ", length=" + frame.getLength());
-        mediaCodec.queueInputBuffer(frame.getBufferIndex(), 0, frame.getLength(), frame.getSampleTime(), frame.getFlags());
+
+        if (frame.getSampleTime() >= 0) {
+            //log.info("Decoder gets frame pts=" + frame.getSampleTime() + ", trackId=" + frame.getTrackId() + ", flags=" + frame.getFlags() + ", length=" + frame.getLength());
+            mediaCodec.queueInputBuffer(frame.getBufferIndex(), 0, frame.getLength(), frame.getSampleTime(), frame.getFlags());
+        }
+        else {
+            //- media extractor sets -1 as sample time on EOF
+            Logger.getLogger(getClass().getSimpleName()).info("not pushing frame with PTS " + frame.getSampleTime());
+        }
 
         // Allowing to pass only needed frames (example - cut segments)
         if (frame.isSkipFrame()) {
@@ -168,6 +176,7 @@ abstract class Decoder extends MediaCodecPlugin implements IFrameAllocator, ITra
             outputBufferIndexes.add(outputBufferIndex);
             outputBufferInfos.add(bufferInfo);
 
+            log.info("Kept decoded frame with PTS " + bufferInfo.presentationTimeUs);
             return outputBufferIndex;
         }
 
@@ -176,6 +185,8 @@ abstract class Decoder extends MediaCodecPlugin implements IFrameAllocator, ITra
         if (outputBufferIndex >= 0) {
             mediaCodec.releaseOutputBuffer(outputBufferIndex, false);
         }
+
+        log.info("Skipped decoded frame with PTS " + bufferInfo.presentationTimeUs);
         return IMediaCodec.INFO_TRY_AGAIN_LATER;
     }
 

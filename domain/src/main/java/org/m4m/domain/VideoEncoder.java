@@ -18,6 +18,8 @@ package org.m4m.domain;
 
 import org.m4m.VideoFormat;
 
+import java.util.logging.Logger;
+
 public class VideoEncoder extends Encoder implements ITransform {
     public VideoEncoder(IMediaCodec mediaCodec) {
         super(mediaCodec);
@@ -79,7 +81,6 @@ public class VideoEncoder extends Encoder implements ITransform {
     @Override
     protected void feedMeIfNotDraining() {
         if (state != PluginState.Draining && state != PluginState.Drained ) {
-
             Pair<Command, Integer> command = getInputCommandQueue().first();
 
             if (command == null || command.left != Command.NeedData ) {
@@ -90,25 +91,21 @@ public class VideoEncoder extends Encoder implements ITransform {
 
     @Override
     public void push(Frame frame) {
-        //Logger.getLogger("AMP").info("VideoEncoder frame gets pushed: pts=" + frame.getSampleTime() + ", trackId=" + frame.getTrackId() + ", flags=" + frame.getFlags() + ", length=" + frame.getLength());
+        Logger.getLogger("AMP").info("VideoEncoder frame gets pushed: pts=" + frame.getSampleTime() + ", trackId=" + frame.getTrackId() + ", flags=" + frame.getFlags() + ", length=" + frame.getLength());
 
-        //Logger.getLogger("AMP").info("VideoEncoder queue size: " + getInputCommandQueue().size() + " frameCount = " + frameCount);
+//        Logger.getLogger("AMP").info("VideoEncoder queue size: " + getInputCommandQueue().size() + " frameCount = " + frameCount);
+
         super.push(frame);
     }
 
     @Override
     public void notifySurfaceReady(ISurface surface) {
-
         // we should ALWAYS swap, or else we'll never receive more encoded frames,
         surface.swapBuffers();
-
-        //Logger.getLogger("AMP").info("VideoEncoder frameCount++ = " + frameCount);
     }
 
     @Override
     public void releaseOutputBuffer(int outputBufferIndex) {
         super.releaseOutputBuffer(outputBufferIndex);
-
-        //Logger.getLogger("AMP").info("VideoEncoder frameCount-- = " + frameCount);
     }
 }

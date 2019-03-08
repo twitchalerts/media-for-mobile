@@ -26,6 +26,7 @@ import org.m4m.domain.MediaFormat;
 
 import java.io.IOException;
 import java.nio.ByteBuffer;
+import java.util.logging.Logger;
 
 public abstract class MediaCodecDecoderPlugin implements IMediaCodec {
     protected MediaCodec mediaCodec;
@@ -94,8 +95,18 @@ public abstract class MediaCodecDecoderPlugin implements IMediaCodec {
         return outputBuffers;
     }
 
+    private long mLastEnqueuedPTS = -1;
+
     @Override
     public void queueInputBuffer(int index, int offset, int size, long presentationTimeUs, int flags) {
+//        if (presentationTimeUs < mLastEnqueuedPTS) {
+//            // technically allowed to enqueu out of order, but try to catch this as a coding error
+//            throw new IllegalArgumentException("enqueue out of order PTS! " + presentationTimeUs + " prev " + mLastEnqueuedPTS);
+//        }
+
+        mLastEnqueuedPTS = presentationTimeUs;
+
+        Logger.getLogger(getClass().getSimpleName()).info("enqueued PTS " + presentationTimeUs);
         mediaCodec.queueInputBuffer(index, offset, size, presentationTimeUs, flags);
     }
 
@@ -112,7 +123,11 @@ public abstract class MediaCodecDecoderPlugin implements IMediaCodec {
             getOutputBuffers();
         }
 
-        BufferInfoTranslator.convertFromAndroid(outputBufferInfo, bufferInfo);
+        // Don't copy old data to the provided buffer.
+        if (result >= 0) {
+            Logger.getLogger(getClass().getSimpleName()).info("dequeued PTS " + outputBufferInfo.presentationTimeUs);
+            BufferInfoTranslator.convertFromAndroid(outputBufferInfo, bufferInfo);
+        }
 
         return result;
     }
